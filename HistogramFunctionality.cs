@@ -1,47 +1,47 @@
-namespace LinqPadHelpers
+namespace LinqpadHelpers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Linq.Expressions;
-	
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    
   public static class HistogramFunctionality
   {
-	public static IEnumerable<HistogramFunctionality.HistogramData2<T>> HistogramZip<T>(this IEnumerable<HistogramFunctionality.HistogramData<T>> x1, IEnumerable<HistogramFunctionality.HistogramData<T>> x2)
-	{
-	  Dictionary<T, HistogramFunctionality.HistogramData2<T>> dictionary = new Dictionary<T, HistogramFunctionality.HistogramData2<T>>();
-	  foreach (HistogramFunctionality.HistogramData<T> histogramData in x1)
-	  {
-		if (!dictionary.ContainsKey(histogramData.Key))
-		  dictionary.Add(histogramData.Key, new HistogramFunctionality.HistogramData2<T>()
-		  {
-			Key = histogramData.Key
-		  });
-		dictionary[histogramData.Key].Count1 = histogramData.Count;
-		dictionary[histogramData.Key].PercentLocalTotal1 = histogramData.PercentTotal;
-	  }
-	  foreach (HistogramFunctionality.HistogramData<T> histogramData in x2)
-	  {
-		if (!dictionary.ContainsKey(histogramData.Key))
-		  dictionary.Add(histogramData.Key, new HistogramFunctionality.HistogramData2<T>()
-		  {
-			Key = histogramData.Key
-		  });
-		dictionary[histogramData.Key].Count2 = histogramData.Count;
-		dictionary[histogramData.Key].PercentLocalTotal2 = histogramData.PercentTotal;
-	  }
-	  int globalCount = Enumerable.Sum<HistogramFunctionality.HistogramData2<T>>((IEnumerable<HistogramFunctionality.HistogramData2<T>>) dictionary.Values, (Func<HistogramFunctionality.HistogramData2<T>, int>) (r => r.Count1 + r.Count2));
-	  return Enumerable.Select<HistogramFunctionality.HistogramData2<T>, HistogramFunctionality.HistogramData2<T>>((IEnumerable<HistogramFunctionality.HistogramData2<T>>) dictionary.Values, (Func<HistogramFunctionality.HistogramData2<T>, HistogramFunctionality.HistogramData2<T>>) (r => new HistogramFunctionality.HistogramData2<T>()
-	  {
-		Key = r.Key,
-		PercentLocalTotal1 = r.PercentLocalTotal1,
-		PercentLocalTotal2 = r.PercentLocalTotal2,
-		Count1 = r.Count1,
-		Count2 = r.Count2,
-		PercentGlobalTotal1 = 100.0 * (double) r.Count1 / (double) globalCount,
-		PercentGlobalTotal2 = 100.0 * (double) r.Count2 / (double) globalCount
-	  }));
-	}
+    public static IEnumerable<HistogramFunctionality.HistogramData2<T>> HistogramZip<T>(this IEnumerable<HistogramFunctionality.HistogramData<T>> x1, IEnumerable<HistogramFunctionality.HistogramData<T>> x2)
+    {
+      Dictionary<T, HistogramFunctionality.HistogramData2<T>> dictionary = new Dictionary<T, HistogramFunctionality.HistogramData2<T>>();
+      foreach (HistogramFunctionality.HistogramData<T> histogramData in x1)
+      {
+        if (!dictionary.ContainsKey(histogramData.Key))
+          dictionary.Add(histogramData.Key, new HistogramFunctionality.HistogramData2<T>()
+          {
+            Key = histogramData.Key
+          });
+        dictionary[histogramData.Key].Count1 = histogramData.Count;
+        dictionary[histogramData.Key].PercentLocalTotal1 = histogramData.PercentTotal;
+      }
+      foreach (HistogramFunctionality.HistogramData<T> histogramData in x2)
+      {
+        if (!dictionary.ContainsKey(histogramData.Key))
+          dictionary.Add(histogramData.Key, new HistogramFunctionality.HistogramData2<T>()
+          {
+            Key = histogramData.Key
+          });
+        dictionary[histogramData.Key].Count2 = histogramData.Count;
+        dictionary[histogramData.Key].PercentLocalTotal2 = histogramData.PercentTotal;
+      }
+      int globalCount = Enumerable.Sum<HistogramFunctionality.HistogramData2<T>>((IEnumerable<HistogramFunctionality.HistogramData2<T>>) dictionary.Values, (Func<HistogramFunctionality.HistogramData2<T>, int>) (r => r.Count1 + r.Count2));
+      return Enumerable.Select<HistogramFunctionality.HistogramData2<T>, HistogramFunctionality.HistogramData2<T>>((IEnumerable<HistogramFunctionality.HistogramData2<T>>) dictionary.Values, (Func<HistogramFunctionality.HistogramData2<T>, HistogramFunctionality.HistogramData2<T>>) (r => new HistogramFunctionality.HistogramData2<T>()
+      {
+        Key = r.Key,
+        PercentLocalTotal1 = r.PercentLocalTotal1,
+        PercentLocalTotal2 = r.PercentLocalTotal2,
+        Count1 = r.Count1,
+        Count2 = r.Count2,
+        PercentGlobalTotal1 = 100.0 * (double) r.Count1 / (double) globalCount,
+        PercentGlobalTotal2 = 100.0 * (double) r.Count2 / (double) globalCount
+      }));
+    }
 
     public static IEnumerable<HistogramFunctionality.HistogramData3<T>> HistogramZip<T>(this IEnumerable<HistogramFunctionality.HistogramData<T>> x1, IEnumerable<HistogramFunctionality.HistogramData<T>> x2, IEnumerable<HistogramFunctionality.HistogramData<T>> x3)
     {

@@ -1,4 +1,4 @@
-﻿namespace zDbg.LinqpadHelpers
+﻿namespace LinqpadHelpers
 {
     using System;
     using System.Collections.Generic;
